@@ -1,0 +1,603 @@
+/* Furnishes house: peach paper, brown ink, burnt orange. One screen; what you read hangs on things in it. */
+.hs {
+  --hs-paper: #fff2e5;
+  --hs-cream: #fff6e9;
+  --hs-ink: #6e1810;
+  --hs-muted: rgba(110, 24, 16, 0.64);
+  --hs-line: rgba(110, 24, 16, 0.16);
+  --hs-line-2: rgba(110, 24, 16, 0.3);
+  --hs-accent: #e7551a;
+  --hs-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --hs-mono: var(--font-space-mono), "Space Mono", ui-monospace, monospace;
+  --hs-ease: cubic-bezier(0.16, 0.84, 0.3, 1);
+  color: var(--hs-ink);
+  background: var(--hs-paper);
+  font-family: var(--hs-sans);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+.hs-loading,
+.hs-root {
+  position: fixed;
+  inset: 0;
+  background: var(--hs-paper);
+}
+.hs-canvas {
+  position: absolute;
+  inset: 0;
+}
+.hs-canvas canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* things pinned to points in the house */
+.hs-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hs-labels > * {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  animation: hs-in 0.35s var(--hs-ease);
+}
+@keyframes hs-in {
+  from {
+    opacity: 0;
+    margin-top: 6px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+.hs-label {
+  max-width: 300px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 246, 233, 0.94);
+  border: 1px solid var(--hs-line-2);
+  color: var(--hs-ink);
+  font-size: 13.5px;
+  font-stretch: 88%;
+  line-height: 1.3;
+  text-align: center;
+}
+.hs-whisper {
+  background: var(--hs-ink);
+  color: var(--hs-paper);
+  border-color: var(--hs-ink);
+  font-style: italic;
+}
+
+/* the shop tag: hangs from the piece on a short string */
+.hs-tag {
+  pointer-events: auto;
+  display: grid;
+  gap: 1px;
+  padding: 10px 12px 9px;
+  margin-top: 26px;
+  min-width: 120px;
+  border-radius: 3px 3px 10px 10px;
+  background: #fbf3e6;
+  border: 1px solid var(--hs-line-2);
+  box-shadow: 0 6px 18px rgba(110, 24, 16, 0.12);
+  font-size: 12.5px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+  text-align: left;
+}
+.hs-tag::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -26px;
+  width: 1px;
+  height: 26px;
+  background: var(--hs-line-2);
+}
+.hs-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 999px;
+  background: var(--hs-paper);
+  border: 1px solid var(--hs-line-2);
+}
+.hs-tag b {
+  color: var(--hs-ink);
+  font-size: 14px;
+  font-weight: 700;
+  font-stretch: 84%;
+  padding-top: 8px;
+}
+.hs-tag-price {
+  color: var(--hs-accent);
+  font-weight: 600;
+}
+.hs-tag-legend {
+  min-width: 0;
+  padding: 7px 11px 6px;
+  font-size: 13px;
+  color: var(--hs-ink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.hs-tag-legend:hover {
+  border-color: var(--hs-accent);
+}
+.hs-tag-legend::after {
+  top: 4px;
+}
+
+/* the price card leaning at the base */
+.hs-card {
+  pointer-events: auto;
+  width: min(320px, calc(100vw - 32px));
+  padding: 14px 16px 12px;
+  border-radius: 6px;
+  background: #fdf7ee;
+  border: 1px solid var(--hs-line-2);
+  box-shadow:
+    0 10px 24px rgba(110, 24, 16, 0.14),
+    0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  transform-origin: bottom right;
+  display: grid;
+  gap: 6px;
+  font-size: 14.5px;
+  color: var(--hs-ink);
+}
+.hs-card-kicker {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hs-accent);
+}
+.hs-card-text {
+  margin: 0;
+}
+.hs-card-counts {
+  margin: 0;
+  font-size: 12.5px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+  font-variant-numeric: tabular-nums;
+}
+.hs-card-hint {
+  margin: 0;
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--hs-muted);
+}
+.hs-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hs-line-2);
+}
+.hs-stub {
+  padding: 8px 14px;
+  border-radius: 4px;
+  background: var(--hs-accent);
+  color: #fff6e9;
+  font-size: 14px;
+  font-weight: 700;
+  font-stretch: 88%;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.hs-stub:hover {
+  background: #c9430f;
+}
+.hs-quiet {
+  font-size: 12.5px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--hs-line-2);
+  cursor: pointer;
+}
+.hs-quiet:hover {
+  color: var(--hs-ink);
+}
+
+/* part tags on pull-apart */
+.hs-parttag {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 246, 233, 0.92);
+  border: 1px solid var(--hs-line-2);
+  font-size: 11.5px;
+  font-stretch: 88%;
+  color: var(--hs-ink);
+  white-space: nowrap;
+}
+.hs-parttag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 10px;
+  background: var(--hs-line-2);
+}
+
+/* the delivery note on the boxes by the door */
+.hs-note {
+  pointer-events: auto;
+  width: min(300px, calc(100vw - 32px));
+  padding: 12px 14px;
+  border-radius: 4px;
+  background: #fdf7ee;
+  border: 1px solid var(--hs-line-2);
+  box-shadow: 0 10px 24px rgba(110, 24, 16, 0.14);
+  display: grid;
+  gap: 4px;
+  font-size: 13.5px;
+  color: var(--hs-ink);
+  margin-top: -10px;
+}
+.hs-note b {
+  font-stretch: 84%;
+  font-size: 15px;
+}
+.hs-note-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--hs-line-2);
+}
+
+/* the corner: the name, one line, the way back */
+.hs-corner {
+  position: absolute;
+  left: clamp(16px, 3vw, 32px);
+  top: clamp(14px, 2.4vw, 24px);
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+.hs-mark {
+  font-weight: 700;
+  font-size: 20px;
+  font-stretch: 84%;
+  letter-spacing: -0.01em;
+  color: var(--hs-ink);
+}
+.hs-tagline {
+  margin: 0;
+  font-size: 14px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+  animation: hs-in 0.4s var(--hs-ease);
+}
+.hs-home,
+.hs-boxes {
+  font-size: 14px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+  animation: hs-in 0.4s var(--hs-ease);
+}
+.hs-home:hover,
+.hs-boxes:hover {
+  color: var(--hs-ink);
+}
+.hs-boxes {
+  color: var(--hs-accent);
+}
+
+/* the time bar while a kit goes together, inside the card */
+.hs-timebar {
+  display: grid;
+  gap: 6px;
+  padding: 6px 0 16px;
+  font-size: 12.5px;
+  font-stretch: 88%;
+  color: var(--hs-ink);
+  font-variant-numeric: tabular-nums;
+}
+.hs-timebar-label {
+  font-weight: 600;
+}
+.hs-timebar-track {
+  position: relative;
+  display: block;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--hs-line);
+}
+.hs-timebar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: var(--hs-accent);
+}
+.hs-timebar-mark {
+  position: absolute;
+  top: -5px;
+  width: 2px;
+  height: 16px;
+  margin-left: -1px;
+  background: var(--hs-line-2);
+}
+.hs-timebar-mark[data-passed="true"] {
+  background: var(--hs-ink);
+}
+.hs-timebar-mark span {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--hs-muted);
+}
+
+/* the caption line: the friend with a voice */
+.hs-caption {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 2.4vw, 26px);
+  transform: translateX(-50%);
+  width: min(560px, calc(100vw - 32px));
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+.hs-caption-line {
+  position: relative;
+  width: 100%;
+}
+.hs-caption-go {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--hs-ink);
+  color: var(--hs-paper);
+  font-size: 16px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+.hs-caption input {
+  width: 100%;
+  padding: 11px 46px 11px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--hs-line-2);
+  background: rgba(255, 246, 233, 0.92);
+  backdrop-filter: blur(6px);
+  color: var(--hs-ink);
+  font-size: 15px;
+  font-stretch: 88%;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.hs-caption input::placeholder {
+  color: var(--hs-muted);
+  font-style: italic;
+}
+.hs-caption input:focus {
+  outline: none;
+  border-color: var(--hs-ink);
+  text-align: left;
+}
+.hs-starters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hs-starters button {
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--hs-line-2);
+  background: rgba(255, 246, 233, 0.8);
+  font-size: 12.5px;
+  font-stretch: 88%;
+  color: var(--hs-ink);
+}
+.hs-starters button:hover {
+  border-color: var(--hs-ink);
+}
+
+@media (max-width: 720px) {
+  .hs-card {
+    font-size: 13.5px;
+  }
+  .hs-card-sheet {
+    position: absolute;
+    left: 12px !important;
+    right: 12px;
+    top: auto !important;
+    bottom: 104px;
+    width: auto;
+    transform: none !important;
+  }
+  .hs-caption {
+    bottom: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-labels > *,
+  .hs-tagline,
+  .hs-home,
+  .hs-boxes {
+    animation: none;
+  }
+}
+
+/* the way to the plain list, and the sheet it slides in on */
+.hs-index {
+  position: absolute;
+  right: clamp(16px, 3vw, 32px);
+  top: clamp(16px, 2.6vw, 26px);
+  font-size: 14px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+}
+.hs-index:hover {
+  color: var(--hs-ink);
+}
+.hs-sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 100vw);
+  background: rgba(255, 246, 233, 0.97);
+  border-left: 1px solid var(--hs-line);
+  box-shadow: -18px 0 40px rgba(110, 24, 16, 0.12);
+  transform: translateX(100%);
+  transition: transform 0.35s var(--hs-ease);
+  overflow: auto;
+  padding: 22px 22px 40px;
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+.hs-sheet[data-open="true"] {
+  transform: translateX(0);
+}
+.hs-sheet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.hs-sheet-head b {
+  font-size: 20px;
+  font-weight: 700;
+  font-stretch: 84%;
+}
+.hs-sheet h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hs-accent);
+}
+.hs-sheet-list {
+  display: grid;
+  gap: 6px;
+}
+.hs-sheet-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--hs-line);
+  background: var(--hs-cream);
+}
+.hs-sheet-pic {
+  width: 64px;
+  height: 52px;
+  background: #f0e2d2;
+  border-radius: 6px;
+  padding: 4px;
+  display: grid;
+  place-items: center;
+}
+.hs-sheet-pic img,
+.hs-sheet-pic svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.hs-sheet-row b {
+  font-size: 15px;
+  font-weight: 700;
+  font-stretch: 84%;
+}
+.hs-sheet-row .hs-sheet-meta {
+  font-size: 12.5px;
+  font-stretch: 88%;
+  color: var(--hs-muted);
+}
+.hs-sheet-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 13px;
+  font-stretch: 88%;
+}
+.hs-sheet-links a,
+.hs-sheet-links button {
+  color: var(--hs-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--hs-line-2);
+}
+.hs-sheet-foot {
+  font-size: 13px;
+  color: var(--hs-muted);
+  display: grid;
+  gap: 6px;
+}
+.hs-sheet-foot a {
+  color: var(--hs-ink);
+}
+
+.hs-note-rec {
+  font-size: 12.5px;
+  color: var(--hs-muted);
+}
+.hs-note-rec a {
+  color: var(--hs-accent);
+}
+
+/* the friend's answer can carry a link, or a mark that the model is not connected */
+.hs-whisper {
+  pointer-events: auto;
+}
+.hs-whisper-link {
+  color: #ffd2b8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.hs-caption-go[data-busy="true"] {
+  animation: hs-pulse 1.1s ease-in-out infinite;
+}
+@keyframes hs-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-caption-go[data-busy="true"] {
+    animation: none;
+  }
+}

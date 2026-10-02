@@ -1,0 +1,317 @@
+/* The first Explore layout, put back on its feet.
+
+   Lifted from commit ccbbbaf (17 Sep 2026, "Three families for the sixty
+   records"), rule for rule, with the prefix changed from .fm- to .o1- so it
+   cannot touch the page that is live. Its own colour variables are declared
+   here because the ones it used (--hs-*) belong to a stylesheet it no longer
+   shares. Nothing is modernised: the pills on the bag and the view control are
+   its own, and so are the 30px verbs.
+
+   The idea the layout carries: the top bar and the left column are two halves
+   of one sentence — "I need … that lets me …". */
+
+.o1-root {
+  --o1-paper: #fff2e5;
+  --o1-cream: #fff6e9;
+  --o1-ink: #6e1810;
+  --o1-muted: rgba(110, 24, 16, 0.64);
+  --o1-line: rgba(110, 24, 16, 0.16);
+  --o1-line-2: rgba(110, 24, 16, 0.3);
+  --o1-accent: #e7551a;
+  --o1-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --o1-mono: var(--font-space-mono), "Space Mono", ui-monospace, monospace;
+  --o1-ease: cubic-bezier(0.16, 0.84, 0.3, 1);
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--o1-paper);
+  color: var(--o1-ink);
+  font-family: var(--o1-sans);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* the street: the poster this page used to paint before the 3D arrived */
+.o1-poster {
+  position: absolute;
+  inset: 0;
+  background: var(--o1-paper) center / cover no-repeat;
+}
+
+/* ---- the sentence: top ---- */
+.o1-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 28px;
+  z-index: 5;
+  background: linear-gradient(var(--o1-paper) 62%, rgba(255, 242, 229, 0));
+}
+.o1-brand {
+  width: 180px;
+  flex: none;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--o1-ink);
+  text-decoration: none;
+}
+.o1-lead {
+  font-family: var(--o1-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--o1-muted);
+  white-space: nowrap;
+}
+.o1-cases {
+  display: flex;
+  align-items: baseline;
+  gap: 2px 18px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+.o1-case {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 6px 0 5px;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--o1-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+  white-space: nowrap;
+}
+.o1-case sup,
+.o1-verb sup {
+  font-family: var(--o1-mono);
+  font-size: 10px;
+  font-weight: 400;
+  margin-left: 3px;
+  color: var(--o1-muted);
+  vertical-align: super;
+}
+.o1-case:hover {
+  color: var(--o1-ink);
+}
+.o1-case[aria-pressed="true"] {
+  color: var(--o1-ink);
+  font-weight: 700;
+  border-bottom-color: var(--o1-accent);
+}
+.o1-all {
+  margin-left: 10px;
+}
+/* the first word of the sentence: which family */
+.o1-family {
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--o1-muted);
+}
+.o1-family[aria-current="page"] {
+  color: var(--o1-ink);
+  border-bottom-color: var(--o1-ink);
+}
+.o1-gap {
+  width: 1px;
+  height: 22px;
+  background: var(--o1-line-2);
+  align-self: center;
+  margin: 0 2px;
+}
+.o1-case[data-none="true"] {
+  opacity: 0.55;
+}
+.o1-bag {
+  flex: none;
+  font-family: var(--o1-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--o1-ink);
+  text-decoration: none;
+  border: 1px solid var(--o1-line-2);
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+.o1-bag:hover {
+  background: var(--o1-ink);
+  color: var(--o1-paper);
+}
+
+/* ---- the sentence: left ---- */
+.o1-rail {
+  position: absolute;
+  top: 96px;
+  left: 28px;
+  width: 196px;
+  bottom: 28px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.o1-rail .o1-lead {
+  margin-bottom: 10px;
+}
+.o1-verb {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 3px 0;
+  font: inherit;
+  text-align: left;
+  color: var(--o1-muted);
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  width: 100%;
+}
+.o1-verb > span {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+/* the line under a verb is not there until you are on it */
+.o1-verb small {
+  grid-column: 1 / -1;
+  font-family: var(--o1-mono);
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--o1-muted);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.3s var(--o1-ease),
+    opacity 0.3s;
+}
+.o1-verb:hover > span,
+.o1-verb[aria-pressed="true"] > span {
+  color: var(--o1-ink);
+}
+.o1-verb[aria-pressed="true"] > span {
+  border-bottom-color: var(--o1-accent);
+}
+.o1-verb[aria-pressed="true"] small,
+.o1-verb:hover small {
+  max-height: 32px;
+  opacity: 1;
+  padding: 3px 0 6px;
+}
+.o1-verb[data-none="true"] > span {
+  opacity: 0.55;
+}
+.o1-legend {
+  margin: auto 0 0;
+  font-family: var(--o1-mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--o1-muted);
+  max-width: 180px;
+}
+
+/* ---- the caption, and the control that gives the angle back ---- */
+.o1-caption {
+  position: absolute;
+  left: 236px;
+  right: 28px;
+  bottom: 22px;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  text-align: center;
+  pointer-events: none;
+}
+.o1-view {
+  position: absolute;
+  right: 28px;
+  bottom: 22px;
+  z-index: 6;
+  appearance: none;
+  font: inherit;
+  font-family: var(--o1-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--o1-ink);
+  background: var(--o1-cream);
+  border: 1px solid var(--o1-line-2);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+/* ---- the note that says what this page is; not part of the old design ---- */
+.o1-note {
+  position: absolute;
+  left: 236px;
+  right: 28px;
+  bottom: 56px;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+}
+.o1-note p {
+  margin: 0;
+  max-width: 62ch;
+  padding: 8px 14px;
+  background: var(--o1-cream);
+  border: 1px solid var(--o1-line-2);
+  font-family: var(--o1-mono);
+  font-size: 10.5px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--o1-muted);
+}
+.o1-note a {
+  color: var(--o1-ink);
+}
+
+@media (max-width: 900px) {
+  .o1-rail {
+    position: static;
+    width: auto;
+    padding: 0 28px 28px;
+  }
+  .o1-root {
+    position: static;
+    min-height: 100vh;
+  }
+  .o1-poster {
+    position: static;
+    height: 46vh;
+  }
+  .o1-top {
+    position: static;
+  }
+  .o1-caption,
+  .o1-note,
+  .o1-view {
+    position: static;
+    padding: 12px 28px;
+  }
+}

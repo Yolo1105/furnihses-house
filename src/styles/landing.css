@@ -1,0 +1,424 @@
+/* The first screen: a spot as it is, and the same spot with the piece in it.
+   Built on the system (styles/system.css). The picture is the page; the words
+   are the visitor's own problem, and our answer to it. */
+.ld-main {
+  padding-block: var(--s-6) var(--s-9);
+}
+/* on a wide screen the words stand beside the picture, so the whole thing —
+   the problem, the two halves and the answer — is one screen */
+.ld-swap {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  gap: var(--s-5) var(--s-7);
+}
+.ld-head {
+  display: grid;
+  gap: var(--s-2);
+}
+.ld-what {
+  max-width: 34ch;
+  margin-top: var(--s-2);
+  text-wrap: pretty;
+}
+.ld-say {
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.ld-pair {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  container-type: inline-size;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 8 / 5;
+  border: 1px solid var(--line-2);
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ld-pair img {
+  /* the pictures take no pointer of their own: the pair reads the drag */
+  pointer-events: none;
+  -webkit-user-drag: none;
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ld-before {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: var(--cut);
+}
+/* the picture inside the window is as wide as the whole pair: the window cuts
+   it, it is never squashed */
+.ld-pair .ld-before img {
+  width: 100cqw;
+}
+
+.ld-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--cut);
+  width: 2px;
+  background: var(--accent);
+  pointer-events: none;
+}
+.ld-line b {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: var(--t-lede);
+  font-weight: 400;
+}
+.ld-mark {
+  position: absolute;
+  top: var(--s-3);
+  z-index: 2;
+  padding: 5px 10px;
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ld-mark--left {
+  left: var(--s-3);
+}
+.ld-mark--right {
+  right: var(--s-3);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* what we would put there */
+.ld-answer {
+  grid-column: 1;
+  display: grid;
+  gap: var(--s-4);
+  align-self: end;
+}
+.ld-answer .f-h2 {
+  margin: var(--s-1) 0 var(--s-2);
+}
+.ld-build {
+  margin-top: var(--s-2);
+}
+.ld-acts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+  margin-top: var(--s-4);
+}
+.ld-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+.ld-nav .f-btn {
+  flex: none;
+}
+.ld-dots {
+  margin-inline: auto;
+}
+.ld-dots {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ld-dots button {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  background: none;
+  cursor: pointer;
+}
+.ld-dots button[aria-current="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---- three questions about the visitor's own place ---- */
+.pl-plan {
+  margin-top: var(--s-9);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line-2);
+  display: grid;
+  gap: var(--s-5);
+}
+.pl-head {
+  display: grid;
+  gap: var(--s-2);
+  max-width: 54ch;
+}
+.pl-q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+.pl-q legend {
+  padding: 0;
+}
+.pl-q .f-input {
+  max-width: 44ch;
+}
+.pl-n {
+  margin-left: 7px;
+  color: var(--faint);
+  font-size: var(--t-fine);
+  vertical-align: 0.1em;
+}
+.f-chip[aria-pressed="true"] .pl-n {
+  color: var(--paper);
+}
+
+/* the cards: a picture of what usually answers it, and what it says */
+.pl-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pl-card {
+  appearance: none;
+  display: grid;
+  gap: 0;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  background: var(--cream);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.pl-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  filter: saturate(0.85);
+}
+.pl-card span {
+  padding: 9px 11px;
+  font-stretch: 88%;
+  font-size: var(--t-small);
+  line-height: 1.25;
+}
+.pl-card:hover {
+  border-color: var(--ink);
+}
+.pl-card[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.pl-card[aria-pressed="true"] img {
+  filter: none;
+}
+.pl-card[aria-pressed="true"] span {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+/* what we would put in it */
+.pl-out {
+  display: grid;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+.pl-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pl-hit {
+  display: grid;
+  gap: var(--s-2);
+  color: var(--ink);
+  text-decoration: none;
+}
+.pl-hit img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.pl-what {
+  display: grid;
+  gap: 3px;
+}
+.pl-eur {
+  font-weight: 600;
+}
+.pl-hit:hover .f-h3 {
+  color: var(--accent);
+}
+
+/* the ways out of the page */
+.ld-ways {
+  margin-top: var(--s-8);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  display: grid;
+  justify-items: start;
+  gap: var(--s-2);
+}
+
+@media (max-width: 980px) {
+  .ld-swap {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+  .ld-pair {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .ld-answer {
+    grid-column: 1;
+  }
+  .pl-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pl-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .pl-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pl-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ld-pair {
+    aspect-ratio: 4 / 3;
+  }
+  .ld-mark {
+    font-size: var(--t-label);
+  }
+}
+
+/* ---- the two ways into exploring ------------------------------------------
+   Being asked and looking for yourself are two different appetites, so the
+   street opens on a choice. The doors are the same size on purpose: neither
+   is the small print of the other. */
+.dw-main {
+  display: grid;
+  gap: var(--s-7);
+  align-content: start;
+}
+.dw-fork {
+  display: grid;
+  gap: var(--s-6);
+  padding-top: var(--s-7);
+}
+.dw-head {
+  display: grid;
+  gap: var(--s-2);
+  justify-items: start;
+}
+.dw-lede {
+  margin: 0;
+  max-width: 46ch;
+}
+.dw-doors {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-5);
+}
+.dw-door {
+  display: grid;
+  align-content: start;
+  gap: var(--s-2);
+  padding: var(--s-6) var(--s-5) var(--s-5);
+  border: 1px solid var(--line-2);
+  background: var(--cream);
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+.dw-door:hover,
+.dw-door:focus-visible {
+  border-color: var(--accent);
+}
+.dw-door b {
+  text-wrap: balance;
+}
+.dw-door .f-small {
+  max-width: 38ch;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.dw-go {
+  margin-top: var(--s-3);
+  font-weight: 600;
+}
+.dw-door:hover .dw-go {
+  color: var(--accent);
+}
+.dw-under {
+  margin: 0;
+}
+.dw-back {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-5);
+  padding-top: var(--s-2);
+}
+/* here the questions are the page, not a section ruled off under something
+   else, so they lose the separator they wore at the foot of the home page */
+.dw-main > .pl-plan {
+  margin-top: 0;
+  padding-top: var(--s-5);
+  border-top: 0;
+}
+
+@media (max-width: 760px) {
+  .dw-doors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dw-door {
+    padding: var(--s-5) var(--s-4);
+  }
+}

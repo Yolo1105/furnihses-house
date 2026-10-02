@@ -1,0 +1,169 @@
+/* Build your own: the drawing on one side, everything that can change on the
+   other. Built on the system (styles/system.css). */
+.bd-bar {
+  justify-content: flex-start;
+}
+.bd-root {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-6);
+  align-items: start;
+  padding: var(--s-5) var(--gutter) var(--s-9);
+}
+/* The drawing stays while the list scrolls: the part list below asks you to
+   point at the drawing, so the drawing has to still be there when you get to
+   it. Sticky also makes it the frame the callouts and the bubble measure
+   against — this is the one place .bd-stage is positioned. */
+.bd-stage {
+  position: sticky;
+  top: calc(var(--header-h) + var(--s-4));
+  max-height: calc(100dvh - var(--header-h) - var(--s-6));
+}
+.bd-side {
+  display: grid;
+  gap: var(--s-6);
+  min-width: 0;
+}
+.bd-block {
+  display: grid;
+  gap: var(--s-2);
+}
+.bd-use {
+  margin-top: var(--s-1);
+}
+.bd-opts {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bd-opts .f-option {
+  grid-template-columns: minmax(0, 1fr);
+}
+.bd-what {
+  display: block;
+  font-style: normal;
+  font-size: var(--t-small);
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* what it comes to */
+.bd-price {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: 1px solid var(--line-2);
+  background: var(--cream);
+}
+.bd-eur {
+  font-size: clamp(40px, 4.4vw, 62px);
+  line-height: 1;
+}
+.bd-lines > div,
+.bd-parts > div {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.bd-lines dd,
+.bd-parts dd {
+  padding-top: 0;
+  text-align: right;
+}
+.bd-parts dt {
+  font-size: var(--t-small);
+  color: var(--ink);
+}
+.bd-spec {
+  display: block;
+  font-style: normal;
+  color: var(--muted);
+}
+.bd-build {
+  padding-top: var(--s-2);
+}
+.bd-acts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+  padding-top: var(--s-2);
+}
+
+@media (max-width: 980px) {
+  .bd-root {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* one column: the drawing leads and the list follows it, but it keeps a
+     position so the callouts and the bubble still measure against it */
+  .bd-stage {
+    position: relative;
+    top: auto;
+    max-height: none;
+  }
+}
+
+/* the drawing, and what the pointer is over */
+.bd-callout {
+  position: absolute;
+  top: var(--s-3);
+  right: var(--s-3);
+  z-index: 4;
+  background: var(--paper);
+}
+.bd-bubble {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  gap: 2px;
+  max-width: 260px;
+  padding: var(--s-3);
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  pointer-events: none;
+  translate: 14px 14px;
+}
+.bd-bubble-eur {
+  padding-top: 4px;
+  font-weight: 600;
+}
+.bd-parts > div[data-over="true"] {
+  background: var(--tile);
+}
+
+/* say what you need: the answer is written out and waits to be taken */
+.bd-say {
+  display: grid;
+  gap: var(--s-2);
+}
+.bd-sayrow {
+  display: flex;
+}
+.bd-sayrow .f-input {
+  flex: 1 1 auto;
+  border-right: 0;
+}
+.bd-answer {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-4);
+  border: 1px solid var(--accent);
+  background: var(--cream);
+}
+.bd-change {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bd-change li::before {
+  content: "→ ";
+  color: var(--accent);
+}
+.bd-answer-acts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+  padding-top: var(--s-1);
+}

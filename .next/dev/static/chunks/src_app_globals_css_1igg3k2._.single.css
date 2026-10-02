@@ -1,0 +1,24 @@
+/* [project]/src/app/globals.css [app-client] (css) */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+*, :before, :after {
+  box-sizing: border-box;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+input {
+  font: inherit;
+}
+
+/*# sourceMappingURL=src_app_globals_css_1igg3k2._.single.css.map*/

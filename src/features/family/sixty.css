@@ -1,0 +1,575 @@
+/* Shop: all sixty, standing in line. Built on the system (styles/system.css):
+   this sheet only lays the lines out. Every frame gets one floor line and its
+   versions stand on it at one scale, the way type stands on a baseline. */
+.sx-root {
+  /* One unit for every picture, ruler and floor line: how long one picture
+     pixel is on this screen. Five low blocks fit a line at 1440; it never
+     grows past full size. */
+  --u: clamp(0.5px, (100vw - 340px) / 1250, 1px);
+  --gap: 34;
+}
+.sx-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 10;
+  background: var(--paper);
+  align-items: center;
+}
+/* how much of the line-up is shown: all of it, or only what is made */
+.sx-show {
+  margin-left: auto;
+}
+.sx-find {
+  flex: 0 1 300px;
+  order: -1;
+}
+.sx-find .f-input {
+  min-height: 34px;
+  font-size: var(--t-small);
+}
+.sx-hits {
+  padding-top: var(--s-5);
+}
+.sx-bar .f-tab span {
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  margin-left: 2px;
+  vertical-align: 0.45em;
+  color: var(--faint);
+}
+
+/* ---- what this page is ---- */
+.sx-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-5) var(--s-7);
+  align-items: end;
+  padding-block: var(--s-7) var(--s-8);
+  border-bottom: 1px solid var(--line-2);
+}
+.sx-intro .f-display {
+  margin-top: var(--s-3);
+}
+.sx-buy {
+  margin-top: var(--s-3);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+.sx-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-4);
+}
+
+/* ---- one kind: pieces, walls, screens ---- */
+.sx-family {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: var(--s-5) var(--s-7);
+  padding-block: var(--s-8) var(--s-6);
+  border-bottom: 1px solid var(--line-2);
+  scroll-margin-top: calc(var(--header-h) + 56px);
+}
+.sx-family:last-of-type {
+  border-bottom: 0;
+}
+.sx-family-head {
+  position: sticky;
+  top: calc(var(--header-h) + 72px);
+  align-self: start;
+  display: grid;
+  justify-items: start;
+  gap: var(--s-2);
+}
+.sx-bodies {
+  display: grid;
+  gap: var(--s-8);
+  min-width: 0;
+  padding-bottom: var(--s-6);
+}
+
+/* ---- one frame, in a line ---- */
+/* one frame: its versions on one floor at one scale, and — when one is opened
+   — that one laid out underneath the line. The line keeps the whole width now,
+   because the pieces are drawn at one scale and need the room, and because a
+   picture in a far corner was easy to miss and easy to push off the screen. */
+.sx-body {
+  min-width: 0;
+  display: grid;
+  gap: var(--s-5);
+  scroll-margin-top: calc(var(--header-h) + 72px);
+}
+.sx-body-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+}
+
+/* what an opened design says: the room it was made for on one side, and on the
+   other what it is, what it costs, and what separates it from its siblings */
+.sx-open {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: start;
+  gap: var(--s-5) var(--s-6);
+  padding: var(--s-5);
+  border: 1px solid var(--line-2);
+  background: var(--cream);
+}
+.sx-shot {
+  margin: 0;
+  display: grid;
+  gap: 7px;
+}
+.sx-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.sx-noshot {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 8 / 5;
+  border: 1px dashed var(--line-2);
+  text-align: center;
+}
+.sx-shot figcaption {
+  text-wrap: pretty;
+}
+.sx-shot b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.sx-told {
+  display: grid;
+  gap: var(--s-2);
+  min-width: 0;
+}
+.sx-close {
+  position: absolute;
+  top: var(--s-2);
+  right: var(--s-3);
+  padding: 4px 8px;
+  font-size: var(--t-lede);
+  line-height: 1;
+  color: var(--muted);
+}
+.sx-close:hover {
+  color: var(--accent);
+}
+.sx-lede {
+  margin: 0;
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+.sx-facts {
+  margin-top: var(--s-2);
+}
+.sx-facts > div {
+  grid-template-columns: 92px minmax(0, 1fr);
+}
+.sx-vs {
+  margin-top: var(--s-2);
+}
+.sx-vs ul {
+  display: grid;
+  gap: 5px;
+  margin: 5px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-small);
+  text-wrap: pretty;
+}
+.sx-vs-go {
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-2);
+}
+.sx-vs-go:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.sx-go {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+  margin-top: var(--s-3);
+}
+.sx-say {
+  flex-basis: 100%;
+  margin-top: 2px;
+  min-height: 1.42em;
+  font-size: var(--t-small);
+  font-weight: 600;
+}
+.sx-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-7) calc(var(--gap) * var(--u));
+}
+/* a version is a button, not a link: a click on a picture means "let me look
+   at this", and it opens the panel below rather than leaving the page */
+.sx-item {
+  display: flex;
+  flex-direction: column;
+  /* never shrink: the pictures are drawn at one scale for the whole page, so
+     a squeezed item would spill its picture out of the row instead of moving
+     to the next line */
+  flex: 0 0 auto;
+  min-width: 138px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  scroll-margin-top: calc(var(--header-h) + 96px);
+}
+/* the one that is open keeps its mark while the panel below is showing it */
+.sx-item[data-open="true"] .sx-pic img {
+  translate: 0 -5px;
+}
+.sx-item[data-open="true"] .f-h3 {
+  color: var(--accent);
+}
+.sx-item[data-open="true"] .sx-rec::after {
+  content: "▾";
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  color: var(--accent);
+}
+/* the picture, and the floor under it: drawn past both edges so the floors of
+   neighbours join into one line */
+.sx-pic {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  line-height: 0;
+}
+.sx-pic::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: calc(var(--gap) * var(--u) / -2);
+  right: calc(var(--gap) * var(--u) / -2);
+  bottom: calc(var(--floor) * var(--u));
+  border-top: 1px solid var(--line-2);
+}
+.sx-pic img {
+  display: block;
+  max-width: none;
+  transition: translate 0.35s var(--ease);
+}
+.sx-item[data-hot="true"] .sx-pic img {
+  translate: 0 -5px;
+}
+
+.sx-cap {
+  display: flex;
+  flex-direction: column;
+  max-width: 236px;
+  padding-top: 6px;
+}
+.sx-rec {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--s-2);
+}
+.sx-eur {
+  font-weight: 600;
+}
+.sx-eur .f-muted {
+  font-weight: 400;
+}
+.sx-cap .f-h3 {
+  margin: 1px 0 3px;
+}
+.sx-item:hover .f-h3,
+.sx-item:focus-visible .f-h3,
+.sx-item:target .f-h3 {
+  color: var(--accent);
+}
+/* arrived from the street: this is the one you were looking at */
+.sx-item:target .sx-rec::before {
+  content: "→";
+  font-family: var(--mono);
+  font-size: var(--t-label);
+  color: var(--accent);
+}
+.sx-rel {
+  margin-top: 5px;
+  font-size: var(--t-fine);
+  line-height: 1.4;
+  color: var(--muted);
+}
+.sx-rel[data-live="true"] {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* the height rule that stands at the head of every line */
+.sx-item.sx-rule {
+  min-width: 0;
+  width: 34px;
+}
+.sx-rule .sx-pic {
+  height: calc((var(--h) * var(--metre) + var(--floor)) * var(--u));
+  border-left: 1px solid var(--line-2);
+}
+.sx-rule .sx-pic::after {
+  left: 0;
+}
+.sx-rule i {
+  position: absolute;
+  left: 0;
+  bottom: calc((var(--t) * var(--metre) + var(--floor)) * var(--u));
+  width: 5px;
+  border-top: 1px solid var(--line-2);
+  font-family: var(--mono);
+  font-stretch: 100%;
+  font-style: normal;
+  font-size: var(--t-label);
+  line-height: 0;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  text-indent: 9px;
+  white-space: nowrap;
+}
+.sx-rule i[data-whole="true"] {
+  width: 9px;
+  text-indent: 13px;
+}
+
+@media (max-width: 1180px) {
+  .sx-root {
+    --u: clamp(0.5px, (100vw - 292px) / 1250, 1px);
+  }
+  .sx-body {
+    gap: var(--s-4);
+  }
+  .sx-family {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--s-5) var(--s-6);
+  }
+}
+@media (max-width: 860px) {
+  .sx-root {
+    --u: clamp(0.5px, (100vw - 32px) / 1000, 0.8px);
+    --gap: 28;
+  }
+  .sx-intro {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--s-5) var(--s-7);
+  }
+  .sx-bar {
+    align-items: baseline;
+  }
+  .sx-show {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+  .sx-find {
+    flex-basis: 100%;
+  }
+  .sx-family {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--s-7) var(--s-3);
+  }
+  /* the opened panel stacks: the room first, then what it says about it */
+  .sx-open {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--s-4);
+  }
+  .sx-family-head {
+    position: static;
+  }
+  .sx-bodies {
+    gap: var(--s-7);
+  }
+}
+@media (max-width: 520px) {
+  /* two to a line on a phone: the words under a picture fold instead */
+  .sx-root {
+    --gap: 24;
+  }
+  .sx-item {
+    min-width: 0;
+  }
+  .sx-cap {
+    max-width: 140px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-pic img {
+    transition: none;
+  }
+}
+
+/* ---- the filter: three rows, and the middle one changes with the kind ---- */
+.sf-filter {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 10;
+  display: grid;
+  gap: var(--s-3);
+  align-items: stretch;
+  background: var(--paper);
+}
+.sf-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+}
+.sf-row--kind {
+  align-items: center;
+}
+.sf-kinds {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+}
+/* an option is type on the paper with a rule under it, never a box */
+.sf-kind,
+.sf-opt {
+  appearance: none;
+  padding: 3px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: var(--t-small);
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+.sf-kind {
+  font-size: var(--t-ui);
+}
+.sf-kind:hover,
+.sf-opt:hover {
+  color: var(--ink);
+}
+.sf-kind[aria-pressed="true"],
+.sf-opt[aria-pressed="true"] {
+  color: var(--ink);
+  font-weight: 700;
+  border-bottom-color: var(--accent);
+}
+.sf-kind sup,
+.sf-opt sup {
+  margin-left: 3px;
+  font-size: var(--t-label);
+  font-weight: 400;
+  color: var(--faint);
+  vertical-align: super;
+}
+/* still here, and now matching nothing: you can see what you ruled out */
+.sf-opt[data-none="true"] {
+  opacity: 0.4;
+}
+.sf-made {
+  margin-left: auto;
+}
+.sf-row--asks {
+  gap: var(--s-3) var(--s-6);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--line);
+}
+.sf-ask {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.sf-opts {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--s-4);
+}
+/* what has been asked, read back; every part of it comes off with a click */
+.sf-said {
+  margin: 0;
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--line);
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+.sf-said b {
+  color: var(--ink);
+  font-weight: 700;
+}
+.sf-drop {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--t-small);
+  color: var(--ink);
+  cursor: pointer;
+}
+.sf-drop::before {
+  content: " · ";
+  color: var(--muted);
+}
+.sf-drop:hover {
+  color: var(--accent);
+}
+.sf-clear {
+  margin-left: var(--s-4);
+}
+
+@media (max-width: 860px) {
+  .sf-made {
+    margin-left: 0;
+  }
+  /* and it stops holding on to the top of a phone: three live questions are
+     worth a third of a screen once, at the top, and not for the whole scroll */
+  .sf-filter {
+    position: static;
+    gap: var(--s-2);
+  }
+  /* On a phone the questions wrapped into a sticky block six hundred pixels
+     tall, which is most of the screen and all of it before a single design.
+     Each question is one line that slides sideways instead, so the bar stays
+     short enough to keep. */
+  .sf-row--asks {
+    display: grid;
+    gap: var(--s-2);
+  }
+  .sf-opts {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .sf-opts::-webkit-scrollbar {
+    display: none;
+  }
+  .sf-kinds {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sf-kinds::-webkit-scrollbar {
+    display: none;
+  }
+}

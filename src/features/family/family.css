@@ -1,0 +1,617 @@
+/* Explore: the street. Built on the system (styles/system.css); this sheet only
+   lays the page out. Three columns ruled off from each other: the questions on
+   the left, the street in the middle as a window, the answer on the right when
+   there is one. Nothing floats on a fade; every edge is a hairline. */
+.fm-root {
+  --fm-rail: 364px;
+  --fm-side: 0px;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #f1e4d3;
+  color: var(--ink);
+}
+.fm-root[data-side="true"] {
+  --fm-side: 372px;
+}
+.fm-canvas {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.fm-canvas:active {
+  cursor: grabbing;
+}
+.fm-canvas[data-mode="turn"] {
+  cursor: ew-resize;
+}
+.fm-canvas canvas {
+  display: block;
+  touch-action: none;
+}
+.fm-root[data-ready="true"] .fm-canvas {
+  opacity: 1;
+}
+/* the first frame, as a still: it is on screen before the 3D scene is */
+.fm-poster {
+  position: absolute;
+  inset: 0;
+  background: #f1e4d3 center / cover no-repeat;
+  transition:
+    opacity 0.5s ease,
+    visibility 0s 0.5s;
+}
+.fm-poster[data-hide="true"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ---- top: the site's header, the same as on every page ---- */
+.fm-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 8;
+}
+/* on a narrow screen the homes ride under the header; on a wide one they are
+   step one of the column */
+.fm-homebar {
+  display: none;
+  padding: var(--s-2) var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.fm-homes {
+  gap: 0 14px;
+}
+.fm-homes .f-tab {
+  font-size: var(--t-small);
+}
+/* the one the visitor said is theirs keeps a mark, wherever they wander */
+.fm-homes .f-tab[data-mine="true"]::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 5px;
+  background: var(--accent);
+  vertical-align: 0.55em;
+}
+
+/* ---- left: the questions, a column of the page ---- */
+.fm-rail {
+  position: absolute;
+  top: var(--fm-top, 60px);
+  left: 0;
+  bottom: 0;
+  width: var(--fm-rail);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-5) 0 var(--s-5) var(--gutter);
+  background: var(--paper);
+  border-right: 1px solid var(--line-2);
+}
+.fm-rail > * {
+  margin-right: var(--s-5);
+}
+.fm-step {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
+}
+.fm-step .f-label b {
+  font-weight: 700;
+  color: var(--ink);
+}
+.fm-whole {
+  visibility: hidden;
+  white-space: nowrap;
+}
+.fm-whole[data-show="true"] {
+  visibility: visible;
+}
+.fm-title {
+  margin: var(--s-5) 0 var(--s-1);
+}
+.fm-who {
+  margin: 0 0 var(--s-5);
+  text-wrap: pretty;
+}
+.fm-jobs {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin: 0 0 0 calc(var(--gutter) * -1);
+  padding: 0 var(--s-5) 0 var(--gutter);
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+.fm-jobs section {
+  display: flex;
+  flex-direction: column;
+}
+/* the room a group of problems is in: plain words, not another label */
+.fm-room {
+  margin: 0;
+  padding: var(--s-4) 0 var(--s-2);
+  font-size: var(--t-small);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.fm-jobs section:first-child .fm-room {
+  padding-top: var(--s-1);
+}
+.fm-room[data-now="true"] {
+  color: var(--ink);
+}
+/* say it yourself: the first way into step 2 */
+.fm-say {
+  display: grid;
+  gap: 6px;
+  margin-bottom: var(--s-3);
+}
+.fm-sayrow {
+  position: relative;
+}
+.fm-sayrow .f-input {
+  padding-right: 40px;
+}
+.fm-sayx {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  appearance: none;
+  border: 0;
+  background: none;
+  font-size: var(--t-lede);
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+}
+.fm-sayx:hover {
+  color: var(--ink);
+}
+.fm-orpick {
+  margin: 0;
+  padding: var(--s-2) 0 var(--s-1);
+}
+.fm-none {
+  margin: 0;
+  padding: var(--s-2) 0 var(--s-4) 12px;
+  text-wrap: pretty;
+}
+.fm-jobs .f-option > em {
+  max-width: 46%;
+  text-align: right;
+}
+
+/* ---- right: the answer, a column of the page ---- */
+.fm-side {
+  position: absolute;
+  top: var(--fm-top, 60px);
+  right: 0;
+  bottom: 0;
+  width: var(--fm-side);
+  z-index: 6;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+  background: var(--paper);
+  border-left: 1px solid var(--line-2);
+  animation: fm-side 0.32s var(--ease);
+}
+@keyframes fm-side {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+.fm-card {
+  position: relative;
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-5) var(--s-5) var(--s-6);
+}
+.fm-x {
+  position: absolute;
+  top: var(--s-4);
+  right: var(--s-4);
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line-2);
+  background: none;
+  font-size: var(--t-lede);
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+}
+.fm-x:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.fm-card > .f-label {
+  padding-right: 44px;
+}
+.fm-head {
+  display: grid;
+  gap: var(--s-2);
+}
+.fm-line {
+  margin: 0;
+  font-size: var(--t-body);
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+/* a verb you can play: the button carries a play mark */
+.fm-verbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.fm-verbs .f-btn::before {
+  content: "";
+  border-left: 7px solid currentColor;
+  border-top: 4.5px solid transparent;
+  border-bottom: 4.5px solid transparent;
+}
+.fm-tally {
+  margin: 0;
+  padding: var(--s-3);
+  background: var(--tile);
+  font-size: var(--t-small);
+  font-variant-numeric: tabular-nums;
+}
+.fm-tally span {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+}
+.fm-rel {
+  display: grid;
+}
+.fm-rel .f-small {
+  padding-bottom: var(--s-2);
+  color: var(--muted);
+}
+/* a row you can press: another version of the same frame */
+.fm-ver {
+  appearance: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: 9px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: none;
+  font: inherit;
+  font-size: var(--t-small);
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+.fm-rel .fm-ver:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.fm-ver b {
+  font-weight: 600;
+}
+.fm-ver span {
+  color: var(--muted);
+  text-align: right;
+}
+.fm-ver:hover b {
+  color: var(--accent);
+}
+.fm-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-4);
+}
+.fm-actions .f-btn--primary {
+  flex: 1 1 auto;
+}
+
+/* ---- words pinned to things in the homes ---- */
+.fm-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 3;
+}
+.fm-labels > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.fm-tag {
+  margin-bottom: 12px;
+  padding: 4px 9px;
+  font-stretch: 88%;
+  font-weight: 600;
+  font-size: var(--t-fine);
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  transition: opacity 0.25s;
+}
+.fm-tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 11px;
+  background: var(--line-2);
+}
+.fm-tag[data-show="false"] {
+  visibility: hidden;
+}
+.fm-tag[data-concept="true"] {
+  font-weight: 500;
+  color: var(--muted);
+}
+/* what the visitor asked for: the name turns the brand's orange and an arrow
+   bounces on it, so it is found without reading */
+.fm-tag[data-mark="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  z-index: 2;
+}
+.fm-tag[data-mark="true"]::after {
+  background: var(--accent);
+  width: 2px;
+}
+.fm-tag[data-mark="true"]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 5px);
+  margin-left: -7px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid var(--accent);
+  animation: fm-bounce 0.9s var(--ease) infinite alternate;
+}
+@keyframes fm-bounce {
+  from {
+    translate: 0 -9px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fm-tag[data-mark="true"]::before {
+    animation: none;
+  }
+  .fm-side {
+    animation: none;
+  }
+}
+.fm-tag[data-hover="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.fm-pile {
+  font-size: var(--t-fine);
+  white-space: nowrap;
+}
+
+/* ---- along the foot of the window: what just happened, and the view ---- */
+.fm-caption {
+  position: absolute;
+  left: calc(var(--fm-rail) + var(--s-5));
+  right: calc(var(--fm-side) + var(--s-5) + 300px);
+  bottom: var(--s-5);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-3);
+  pointer-events: none;
+}
+/* the words are about one place: carried well away from it, they step back */
+.fm-caption[data-away="true"] {
+  display: none;
+}
+.fm-caption .f-note {
+  padding: 9px 14px;
+  font-size: var(--t-ui);
+  text-wrap: pretty;
+  background: var(--paper);
+  border-color: var(--line-2);
+}
+.fm-caption .f-btn {
+  pointer-events: auto;
+  background: var(--paper);
+}
+.fm-caption .f-btn:hover {
+  background: var(--ink);
+}
+
+/* the view: always in the corner, so turning never has to be found */
+.fm-cam {
+  position: absolute;
+  right: calc(var(--fm-side) + var(--s-5));
+  bottom: var(--s-5);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--s-2);
+  pointer-events: none;
+}
+.fm-cam > * {
+  pointer-events: auto;
+}
+.fm-cam-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--s-2);
+}
+.fm-seg,
+.fm-cam-pair {
+  display: flex;
+  align-items: stretch;
+  height: 36px;
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+}
+.fm-seg button {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0 13px;
+  font: inherit;
+  font-stretch: 88%;
+  font-size: var(--t-small);
+  color: var(--ink);
+  cursor: pointer;
+}
+.fm-seg button + button {
+  border-left: 1px solid var(--line-2);
+}
+.fm-seg button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.fm-cam-b {
+  appearance: none;
+  border: 0;
+  background: none;
+  width: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.fm-cam-b + .fm-cam-b {
+  border-left: 1px solid var(--line-2);
+}
+.fm-cam-b svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.fm-cam-b:hover,
+.fm-cam-b:active {
+  background: var(--ink);
+  color: var(--paper);
+}
+/* the visitor took the angle; this gives it back */
+.fm-view {
+  display: none;
+  background: var(--paper);
+}
+.fm-view[data-show="true"] {
+  display: inline-flex;
+}
+
+@media (max-width: 1180px) {
+  .fm-root {
+    --fm-rail: 320px;
+  }
+  .fm-root[data-side="true"] {
+    --fm-side: 340px;
+  }
+}
+
+/* ---- a narrow screen: the street on top, the column under it ---- */
+@media (max-width: 860px) {
+  .fm-root {
+    --fm-rail: 0px;
+  }
+  .fm-root[data-side="true"] {
+    --fm-side: 0px;
+  }
+  .fm-homebar {
+    display: block;
+  }
+  .fm-homebar .f-tabs {
+    flex-wrap: nowrap;
+  }
+  .fm-rail .fm-step:first-child,
+  .fm-rail .fm-homes {
+    display: none;
+  }
+  .fm-rail {
+    top: auto;
+    right: 0;
+    width: auto;
+    max-height: 44vh;
+    padding: var(--s-4) var(--gutter);
+    border-right: 0;
+    border-top: 1px solid var(--line-2);
+  }
+  .fm-rail > * {
+    margin-right: 0;
+  }
+  .fm-title {
+    margin-top: 0;
+    font-size: var(--t-h2);
+  }
+  .fm-who,
+  .fm-orpick {
+    display: none;
+  }
+  .fm-jobs {
+    padding-right: var(--gutter);
+    margin-right: calc(var(--gutter) * -1);
+  }
+  .fm-side {
+    top: auto;
+    left: 0;
+    width: auto;
+    max-height: 64vh;
+    z-index: 9;
+    border-left: 0;
+    border-top: 1px solid var(--line-2);
+  }
+  .fm-caption {
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: calc(44vh + var(--s-3));
+  }
+  .fm-cam {
+    top: calc(var(--fm-top, 100px) + var(--s-3));
+    right: var(--gutter);
+    bottom: auto;
+  }
+  .fm-caption .f-note {
+    font-size: var(--t-small);
+  }
+  .fm-seg {
+    display: none;
+  }
+}

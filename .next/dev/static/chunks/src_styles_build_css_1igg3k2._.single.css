@@ -1,0 +1,184 @@
+/* [project]/src/styles/build.css [app-client] (css) */
+.bd-bar {
+  justify-content: flex-start;
+}
+
+.bd-root {
+  gap: var(--s-6);
+  padding: var(--s-5) var(--gutter) var(--s-9);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  align-items: start;
+  display: grid;
+}
+
+.bd-stage {
+  top: calc(var(--header-h) + var(--s-4));
+  max-height: calc(100dvh - var(--header-h) - var(--s-6));
+  position: sticky;
+}
+
+.bd-side {
+  gap: var(--s-6);
+  min-width: 0;
+  display: grid;
+}
+
+.bd-block {
+  gap: var(--s-2);
+  display: grid;
+}
+
+.bd-use {
+  margin-top: var(--s-1);
+}
+
+.bd-opts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+}
+
+.bd-opts .f-option {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.bd-what {
+  font-style: normal;
+  font-size: var(--t-small);
+  color: var(--muted);
+  font-weight: 400;
+  display: block;
+}
+
+.bd-price {
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: 1px solid var(--line-2);
+  background: var(--cream);
+  display: grid;
+}
+
+.bd-eur {
+  font-size: clamp(40px, 4.4vw, 62px);
+  line-height: 1;
+}
+
+.bd-lines > div, .bd-parts > div {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.bd-lines dd, .bd-parts dd {
+  text-align: right;
+  padding-top: 0;
+}
+
+.bd-parts dt {
+  font-size: var(--t-small);
+  color: var(--ink);
+}
+
+.bd-spec {
+  color: var(--muted);
+  font-style: normal;
+  display: block;
+}
+
+.bd-build {
+  padding-top: var(--s-2);
+}
+
+.bd-acts {
+  align-items: center;
+  gap: var(--s-3) var(--s-4);
+  padding-top: var(--s-2);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+@media (max-width: 980px) {
+  .bd-root {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bd-stage {
+    max-height: none;
+    position: relative;
+    top: auto;
+  }
+}
+
+.bd-callout {
+  top: var(--s-3);
+  right: var(--s-3);
+  z-index: 4;
+  background: var(--paper);
+  position: absolute;
+}
+
+.bd-bubble {
+  z-index: 5;
+  max-width: 260px;
+  padding: var(--s-3);
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  pointer-events: none;
+  gap: 2px;
+  display: grid;
+  position: absolute;
+  translate: 14px 14px;
+}
+
+.bd-bubble-eur {
+  padding-top: 4px;
+  font-weight: 600;
+}
+
+.bd-parts > div[data-over="true"] {
+  background: var(--tile);
+}
+
+.bd-say {
+  gap: var(--s-2);
+  display: grid;
+}
+
+.bd-sayrow {
+  display: flex;
+}
+
+.bd-sayrow .f-input {
+  border-right: 0;
+  flex: auto;
+}
+
+.bd-answer {
+  gap: var(--s-2);
+  padding: var(--s-4);
+  border: 1px solid var(--accent);
+  background: var(--cream);
+  display: grid;
+}
+
+.bd-change {
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+}
+
+.bd-change li:before {
+  content: "→ ";
+  color: var(--accent);
+}
+
+.bd-answer-acts {
+  align-items: center;
+  gap: var(--s-3) var(--s-4);
+  padding-top: var(--s-1);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+/*# sourceMappingURL=src_styles_build_css_1igg3k2._.single.css.map*/

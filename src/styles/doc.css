@@ -1,0 +1,268 @@
+/* Pages that are read: a design's own page, help, the bag, a quote. Built only
+   from the system (system.css): same ladder, same hairlines, same pills. */
+.d-doc {
+  display: grid;
+  gap: var(--s-8);
+  padding-block: var(--s-7) 0;
+}
+.d-head {
+  display: grid;
+  gap: var(--s-3);
+}
+.d-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--s-7);
+  align-items: start;
+}
+/* a picture of a design always sits on the same tile, whatever its shape */
+.d-pic {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--tile);
+  border: 1px solid var(--line);
+}
+.d-pic img,
+.d-pic svg {
+  position: absolute;
+  inset: var(--s-6);
+  display: block;
+  width: calc(100% - 2 * var(--s-6));
+  height: calc(100% - 2 * var(--s-6));
+  object-fit: contain;
+}
+.d-gallery {
+  display: grid;
+  gap: var(--s-4);
+}
+.d-athome {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+}
+.d-athome img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+.d-intro {
+  display: grid;
+  gap: var(--s-4);
+}
+.d-intro > p {
+  max-width: 60ch;
+}
+.d-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-5);
+}
+.d-section {
+  display: grid;
+  gap: var(--s-4);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line-2);
+}
+.d-section > p {
+  max-width: 64ch;
+}
+.d-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-ui);
+}
+.d-table td {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.d-table td:last-child {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.d-table b {
+  font-weight: 600;
+}
+.d-table span {
+  display: block;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+.d-list {
+  display: grid;
+  gap: var(--s-2);
+  max-width: 64ch;
+}
+.d-list li {
+  position: relative;
+  padding-left: 18px;
+}
+.d-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+}
+/* a frame around something live: the 3D viewer, a room */
+.d-frame {
+  border: 1px solid var(--line);
+  background: var(--cream);
+  overflow: hidden;
+}
+.d-frame--room {
+  aspect-ratio: 5 / 3;
+  background: var(--tile);
+}
+.d-frame--room img,
+.d-frame--room svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.d-prose {
+  display: grid;
+  gap: var(--s-3);
+  max-width: 64ch;
+}
+.d-empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-4);
+  padding-block: var(--s-7);
+}
+
+/* the bag */
+.d-bag {
+  border-top: 1px solid var(--line-2);
+}
+.d-bagrow {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  gap: var(--s-4) var(--s-5);
+  align-items: center;
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--line);
+}
+.d-bagrow .d-pic {
+  width: 96px;
+  aspect-ratio: 1 / 1;
+}
+.d-bagrow .d-pic img {
+  inset: var(--s-2);
+  width: calc(100% - 2 * var(--s-2));
+  height: calc(100% - 2 * var(--s-2));
+}
+.d-bagrow h2 {
+  margin-bottom: 2px;
+}
+.d-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-variant-numeric: tabular-nums;
+}
+.d-qty .f-btn {
+  min-height: 30px;
+  width: 30px;
+  padding: 0;
+}
+.d-bagside {
+  display: grid;
+  justify-items: end;
+  gap: var(--s-2);
+}
+.d-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  padding-top: var(--s-5);
+}
+
+/* Parts that still come from the earlier storefront sheet (the 3D viewer, the
+   planning form) read the system's tokens, so they match the page around them. */
+/* the viewer comes from the old storefront with its own rounded corners and
+   shadows: inside our pages it takes the system's geometry */
+.sf.sf-embed *,
+.sf.sf-embed *::before,
+.sf.sf-embed *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.sf.sf-embed {
+  --sf-paper: var(--paper);
+  --sf-cream: var(--cream);
+  --sf-deep: var(--paper);
+  --sf-wash: var(--tile);
+  --sf-tile: var(--tile);
+  --sf-ink: var(--ink);
+  --sf-ink-2: var(--ink);
+  --sf-muted: var(--muted);
+  --sf-faint: var(--faint);
+  --sf-line: var(--line);
+  --sf-line-2: var(--line-2);
+  --sf-accent: var(--accent);
+  --sf-accent-deep: var(--accent-deep);
+  --sf-on-accent: var(--on-accent);
+  min-height: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+@media (max-width: 760px) {
+  .d-doc {
+    gap: var(--s-7);
+    padding-top: var(--s-5);
+  }
+  .d-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+  .d-bagrow {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+  .d-bagrow .d-pic {
+    width: 72px;
+  }
+  .d-bagside {
+    grid-column: 2;
+    justify-items: start;
+  }
+}
+
+/* what the visitor asked to hear about, under the bag */
+.d-waiting {
+  margin-top: var(--s-8);
+}
+.d-waiting > .f-small {
+  margin-top: var(--s-1);
+}
+.d-waitrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--line);
+}
+
+/* the estimate, wherever it is shown */
+.d-eur {
+  font-weight: 600;
+}
+.d-price > div {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.d-price dd {
+  padding-top: 0;
+  text-align: right;
+}

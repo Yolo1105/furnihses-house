@@ -1,0 +1,616 @@
+/* ==========================================================================
+   Furnishes: the one design system. Every page uses this and nothing else
+   for colour, type, space, shape and the shared parts.
+
+   The rules, so they do not drift again:
+   1. COLOUR  Peach paper, brown ink. Orange means one thing: what you can do
+              next, or what is chosen now (primary button, current tab, picked
+              option, focus). Status, counts and notes are ink, never orange.
+   2. TYPE    One ladder (display, h1, h2, h3, lede, body, ui, small, fine,
+              label)
+              and no size outside it. Headings are Archivo condensed. The mono
+              label is an eyebrow: one above a heading, a step number, a record
+              number. It is never a button and never repeated down a list.
+   3. SHAPE   One geometry, the brand's own: square corners and hairlines, for
+              what you press as much as for what holds content. A button is a
+              ruled rectangle with condensed capitals. No pills, no circles,
+              no shadows. "Current" is an orange rule (tab, option); "switched
+              on" is ink fill (a toggle). Nothing else marks a choice.
+   4. WORDS   The visitor's words: design, frame, version, add to bag.
+              Never body, life, record, case.
+   ========================================================================== */
+
+:root {
+  /* colour */
+  --paper: #fff2e5;
+  --cream: #fff6e9;
+  --tile: #f6e7d6;
+  --ink: #6e1810;
+  --muted: rgba(110, 24, 16, 0.66);
+  --faint: rgba(110, 24, 16, 0.44);
+  --line: rgba(110, 24, 16, 0.16);
+  --line-2: rgba(110, 24, 16, 0.32);
+  --accent: #e7551a;
+  --accent-deep: #c9430f;
+  --on-accent: #fff6e9;
+  --paper-0: rgba(255, 242, 229, 0);
+  --paper-90: rgba(255, 246, 233, 0.94);
+
+  /* type */
+  --sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --mono: var(--font-space-mono), "Space Mono", ui-monospace, monospace;
+  --w-display: 78%;
+  --w-text: 92%;
+  --t-display: clamp(44px, 6vw, 84px);
+  --t-h1: clamp(32px, 3.4vw, 46px);
+  --t-h2: 28px;
+  --t-h3: 19px;
+  --t-lede: 18px;
+  --t-body: 16px;
+  --t-ui: 15px;
+  --t-small: 14px;
+  --t-fine: 12.5px;
+  --t-label: 11px;
+  --t-brand: 22px;
+
+  /* space: a 4 px ladder */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --gutter: clamp(16px, 2.6vw, 40px);
+  --max: 1360px;
+  --header-h: 60px;
+
+  /* motion */
+  --ease: cubic-bezier(0.16, 0.84, 0.3, 1);
+}
+
+html {
+  background: var(--paper);
+}
+body {
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--sans);
+  font-stretch: var(--w-text);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+:where(.f-page) :where(h1, h2, h3, h4, p, ul, ol, dl, dd, figure) {
+  margin: 0;
+}
+:where(.f-page) :where(ul, ol) {
+  padding: 0;
+  list-style: none;
+}
+:where(.f-page) :where(a) {
+  color: inherit;
+}
+:where(.f-page, .f-header, .f-footer)
+  :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---- layout ---- */
+.f-page {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.f-main {
+  flex: 1;
+}
+.f-wrap {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+.f-narrow {
+  width: min(100% - 2 * var(--gutter), 980px);
+  margin-inline: auto;
+}
+.f-rule {
+  border: 0;
+  border-top: 1px solid var(--line-2);
+  margin: 0;
+}
+
+/* ---- type ---- */
+.f-display,
+.f-h1,
+.f-h2,
+.f-h3 {
+  margin: 0;
+  font-stretch: var(--w-display);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.f-display {
+  font-size: var(--t-display);
+  line-height: 0.96;
+  letter-spacing: -0.028em;
+}
+.f-h1 {
+  font-size: var(--t-h1);
+  line-height: 1;
+}
+.f-h2 {
+  font-size: var(--t-h2);
+  line-height: 1.06;
+}
+.f-h3 {
+  font-size: var(--t-h3);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-stretch: 84%;
+}
+.f-lede {
+  font-size: var(--t-lede);
+  line-height: 1.42;
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+.f-small {
+  font-size: var(--t-small);
+  line-height: 1.42;
+}
+.f-muted {
+  color: var(--muted);
+}
+.f-num {
+  font-variant-numeric: tabular-nums;
+}
+/* a label names something. It is never a button. */
+.f-label {
+  margin: 0;
+  font-family: var(--mono);
+  font-stretch: 100%;
+  font-size: var(--t-label);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- what you press ---- */
+/* the brand's button: a ruled rectangle, condensed capitals */
+.f-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 0;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-stretch: var(--w-display);
+  font-weight: 650;
+  font-size: var(--t-small);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+.f-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.f-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.f-btn--primary:hover,
+.f-btn--primary[aria-pressed="true"] {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: var(--on-accent);
+}
+.f-btn--sm {
+  min-height: 32px;
+  padding: 0 12px;
+  font-size: var(--t-fine);
+}
+.f-btn[disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+/* where the visitor writes: ruled like everything else, the rule turns to ink
+   when they are in it */
+.f-input {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 0;
+  border: 1px solid var(--line-2);
+  background: var(--cream);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--t-ui);
+  line-height: 1.3;
+}
+.f-input::placeholder {
+  color: var(--faint);
+}
+.f-input:hover {
+  border-color: var(--muted);
+}
+.f-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--paper);
+}
+/* a link in running text or at the end of a block */
+.f-link {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.f-link:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+/* a toggle switches one thing on or off: ruled like a button, plain words,
+   ink when it is on. Toggles that belong together share their rules. */
+.f-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.f-chip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin: 0 -1px -1px 0;
+  padding: 0 12px;
+  border-radius: 0;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-stretch: 88%;
+  font-size: var(--t-small);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.f-chip:hover {
+  position: relative;
+  border-color: var(--ink);
+}
+.f-chip[aria-pressed="true"],
+.f-chip[aria-current="true"] {
+  position: relative;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.f-chip[data-none="true"] {
+  color: var(--faint);
+}
+/* tabs change what the whole page is about */
+.f-tabs {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px var(--s-5);
+}
+.f-tab {
+  appearance: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  padding: 6px 0 5px;
+  font: inherit;
+  font-stretch: 84%;
+  font-weight: 500;
+  font-size: var(--t-body);
+  line-height: 1.2;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
+}
+.f-tab:hover {
+  color: var(--ink);
+  border-bottom-color: var(--line-2);
+}
+.f-tab[aria-pressed="true"],
+.f-tab[aria-current="page"],
+.f-tab[aria-current="true"] {
+  color: var(--ink);
+  font-weight: 650;
+  border-bottom-color: var(--accent);
+}
+/* one of several: a ruled row. The current one carries the same orange rule
+   a current tab does, down its side. */
+.f-option {
+  appearance: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--s-3);
+  width: 100%;
+  padding: 9px 0 9px 12px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-left: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: var(--t-ui);
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+.f-option > em {
+  font-style: normal;
+  font-size: var(--t-small);
+  color: var(--faint);
+}
+.f-option:hover {
+  border-left-color: var(--line-2);
+}
+.f-option[aria-pressed="true"] {
+  font-weight: 650;
+  border-left-color: var(--accent);
+  background: var(--cream);
+}
+
+/* ---- what holds content: square, hairline ---- */
+/* made or not: a fact about the piece, so it is ink, not orange */
+.f-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--t-small);
+  line-height: 1.4;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.f-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+}
+.f-status[data-made="false"]::before {
+  background: transparent;
+}
+/* a panel: part of the page, ruled off from what is beside it */
+.f-panel {
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+}
+/* a small note over the 3D: a name on a piece, a line about what happened */
+.f-note {
+  background: var(--paper-90);
+  border: 1px solid var(--line);
+  padding: 5px 10px;
+  font-size: var(--t-small);
+  line-height: 1.35;
+  color: var(--ink);
+}
+/* facts in rows */
+.f-facts {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.f-facts > div {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: var(--s-2);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+}
+.f-facts dt {
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+.f-facts dd {
+  margin: 0;
+  font-size: var(--t-small);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- the header: the same on every page ---- */
+.f-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  min-height: var(--header-h);
+  padding: 0 var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+/* over the 3D the page lays the paper under it, so the header brings none */
+.f-header[data-over="true"] {
+  position: static;
+  border-bottom: 0;
+  background: none;
+}
+.f-brand {
+  font-stretch: var(--w-display);
+  font-weight: 700;
+  font-size: var(--t-brand);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+  margin-right: auto;
+}
+.f-nav {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+}
+.f-bag[data-empty="true"] {
+  color: var(--muted);
+  border-color: var(--line-2);
+}
+
+/* a second row that belongs to the page: tabs, a trail */
+.f-bar {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px var(--s-5);
+  padding: var(--s-3) var(--gutter);
+  border-bottom: 1px solid var(--line);
+}
+.f-trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+.f-trail a {
+  color: inherit;
+  text-decoration: none;
+}
+.f-trail a:hover {
+  color: var(--accent);
+}
+.f-trail span[aria-current] {
+  color: var(--ink);
+}
+
+/* ---- the footer: the same on every page that scrolls ---- */
+.f-footer {
+  margin-top: var(--s-9);
+  border-top: 1px solid var(--line-2);
+  padding: var(--s-6) var(--gutter) var(--s-7);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 3fr);
+  gap: var(--s-5) var(--s-7);
+  font-size: var(--t-small);
+  color: var(--muted);
+}
+.f-footer p {
+  margin: 0;
+  max-width: 44ch;
+}
+.f-footer b {
+  display: block;
+  margin-bottom: 6px;
+  font-stretch: var(--w-display);
+  font-weight: 700;
+  font-size: var(--t-h3);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.f-footer nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.f-footer a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.f-footer a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --header-h: 54px;
+  }
+  .f-header {
+    gap: var(--s-4);
+  }
+  .f-nav {
+    gap: var(--s-4);
+  }
+  .f-nav .f-tab {
+    font-size: var(--t-ui);
+  }
+  .f-footer {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: var(--s-8);
+  }
+}
+
+/* On a phone the four words and the bag no longer fit on the brand's line, and
+   squeezing them pushed the page wider than the screen. So the nav takes a
+   line of its own under them, and scrolls sideways if even that is not enough:
+   nothing is hidden behind a menu the visitor has to find. */
+@media (max-width: 560px) {
+  .f-header {
+    flex-wrap: wrap;
+    gap: 0 var(--s-3);
+    min-height: 0;
+    padding-block: var(--s-2);
+  }
+  .f-nav {
+    order: 3;
+    flex: 1 0 100%;
+    gap: var(--s-4);
+    padding-top: var(--s-2);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .f-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .f-nav .f-tab {
+    white-space: nowrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .f-btn,
+  .f-chip,
+  .f-tab,
+  .f-option {
+    transition: none;
+  }
+}
